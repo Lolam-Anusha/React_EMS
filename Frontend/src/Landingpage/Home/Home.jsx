@@ -4,7 +4,7 @@ import image from "../../assets/erp.png";
 import "./home.css";
 
 const Home = () => {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const handleGetStarted = () => {
         navigate("/login");

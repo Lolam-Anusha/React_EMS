@@ -1,30 +1,43 @@
 import React from 'react'
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import Home from "./Landingpage/Home/Home";
 import LandingPage from './Landingpage/LandingPage'
-// import Dashboard from './Dashboard/Dashboard'
-// import LoginForm  from "./Dashboard/Auth/LoginForm"
+import Login from "./Pages/Login"
+import AdminDashboard from './Pages/AdminDashboard';
+import EmployeeDashboard from './Pages/EmployeeDashboard';
+import PrivateRoutes from './Utils/PrivateRoutes';
+import RoleBaseRoutes from './Utils/RoleBaseRoutes';
+import AdminSummary from './Components/dashboard/AdminSummary';
+import DepartmentList from './Components/department/DepartmentList';
+import AddDepartment from './Components/department/AddDepartment';
+import EditDepartment from './Components/department/EditDepartment';
 
 function App() {
   return (
     <>
-      {/* <Router>
-        <Routes> */}
-          {/* Landing page and authentication routes */}
-          {/* <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<LoginForm />} /> */}
-          
-          {/* Dashboard routes */}
-          {/* <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/dashboard/admin" element={<Dashboard />} />
-          <Route path="/dashboard/manager" element={<Dashboard />} />
-          <Route path="/dashboard/employee" element={<Dashboard />} /> */}
-          
-          {/* Redirect any unmatched routes to home */}
-          {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
-        {/* </Routes>
-      </Router> */}
-      <LandingPage/>
+      <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<LandingPage/>}></Route>
+        {/* <Route path='/home' element={<Home/>}/> */}
+        <Route path='/login' element={<Login/>}></Route>
+        <Route path='/admin-dashboard' element={
+          <PrivateRoutes>
+            <RoleBaseRoutes requiredRole={["admin"]}>
+              <AdminDashboard/>
+            </RoleBaseRoutes>
+          </PrivateRoutes>
+        }>
+
+          <Route index element={<AdminSummary/>}></Route>
+
+          <Route path='/admin-dashboard/departments' element={<DepartmentList/>}></Route>
+          <Route path='/admin-dashboard/add-department' element={<AddDepartment/>}></Route>
+          <Route path='/admin-dashboard/department/:id' element={<EditDepartment/>}></Route>
+
+        </Route>
+        <Route path='/employee-dashboard' element={<EmployeeDashboard/>}></Route>
+      </Routes>
+      </BrowserRouter>
     </>
   )
 }
