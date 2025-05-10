@@ -78,6 +78,7 @@ function App() {
              <Route path='/employee-dashboard/setting' element={<Setting/>}></Route>
 
            </Route>
+           
         </Routes>
       </BrowserRouter>
     </>
